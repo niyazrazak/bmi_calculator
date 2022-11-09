@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
@@ -14,6 +16,8 @@ class InputPage extends StatefulWidget {
 enum Gender { male, female }
 
 int height = 180;
+int weight = 60;
+int age = 30;
 
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
@@ -88,6 +92,10 @@ class _InputPageState extends State<InputPage> {
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
+                        inactiveTrackColor: Color(0xFF8D8E98),
+                        activeTrackColor: Colors.white,
+                        thumbColor: Color(0xFFEB1555),
+                        overlayColor: Color(0x29EB1555),
                         thumbShape:
                             RoundSliderThumbShape(enabledThumbRadius: 15.0),
                         overlayShape:
@@ -114,46 +122,87 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                      onPress: () {
-                        setState(() {
-                          selectedGender = Gender.male;
-                        });
-                      },
-                      colour: Color(0xFF1D1E33),
-                      cardChild: Column(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.mars,
-                            size: 80,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text("Male")
-                        ],
-                      )),
+                    colour: Color(0xFF1D1E33),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Weight",
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: Icons.add,
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: ReusableCard(
-                      onPress: () {
-                        setState(() {
-                          selectedGender = Gender.male;
-                        });
-                      },
-                      colour: Color(0xFF1D1E33),
-                      cardChild: Column(
-                        children: const [
-                          Icon(
-                            FontAwesomeIcons.mars,
-                            size: 80,
+                    child: ReusableCard(
+                  colour: Color(0xFF1D1E33),
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Age",
+                        style: kLabelTextStyle,
+                      ),
+                      Text(
+                        age.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.minus,
+                            onPressed: () {
+                              setState(() {
+                                age--;
+                              });
+                            },
                           ),
                           SizedBox(
-                            height: 15,
+                            width: 10.0,
                           ),
-                          Text("Male")
+                          RoundIconButton(
+                            icon: Icons.add,
+                            onPressed: () {
+                              setState(() {
+                                age++;
+                              });
+                            },
+                          )
                         ],
-                      )),
-                )
+                      ),
+                    ],
+                  ),
+                )),
               ],
             ),
           ),
@@ -165,6 +214,26 @@ class _InputPageState extends State<InputPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({required this.icon, required this.onPressed});
+  final IconData icon;
+  final onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      elevation: 0.0,
+      onPressed: onPressed,
+      constraints: BoxConstraints.tightFor(
+        height: 56,
+        width: 56,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+      child: Icon(icon),
     );
   }
 }
